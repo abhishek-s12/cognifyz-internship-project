@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%# Navbar %>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="bi bi-lightning-charge-fill text-warning"></i> Cognifyz
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link route-link active-link" href="#" data-section="home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link route-link" href="#" data-section="register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link route-link" href="#" data-section="submissions">
+                            Submissions
+                            <span class="badge bg-warning text-dark ms-1" id="subCount"><%= submissions.length %></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <%# ─── SECTION: HOME ─── %>
+    <section class="page-section active-section" id="section-home">
+        <div class="hero-section d-flex align-items-center">
+            <div class="container text-center text-white">
+                <div class="hero-content">
+                    <div class="badge-pill mb-3">✨ Full Stack Internship · Cognifyz Technologies</div>
+                    <h1 class="display-4 fw-bold mb-3">
+                        Where Data Meets <span class="text-warning">Intelligence</span>
+                    </h1>
+                    <p class="lead mb-4 text-white-50">
+                        Register to join our growing community of developers and data enthusiasts.
+                    </p>
+                    <button class="btn btn-warning btn-lg px-5 fw-bold hero-btn me-2" onclick="navigateTo('register')">
+                        Register Now <i class="bi bi-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-outline-light btn-lg px-4" onclick="navigateTo('submissions')">
+                        View Submissions
+                    </button>
+                </div>
+
+                <%# Stats Row %>
+                <div class="row justify-content-center mt-5 g-3">
+                    <div class="col-auto">
+                        <div class="stat-chip">
+                            <i class="bi bi-people-fill me-2"></i>
+                            <span id="heroSubCount"><%= submissions.length %></span> Registered
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="stat-chip">
+                            <i class="bi bi-shield-check me-2"></i> Secure & Validated
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="stat-chip">
+                            <i class="bi bi-phone me-2"></i> Fully Responsive
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%# ─── SECTION: REGISTER ─── %>
+    <section class="page-section" id="section-register">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">Create Your Account</h2>
+                <p class="text-muted">Fill in all fields — validation happens in real time</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+
+                    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+                        <div class="alert alert-danger alert-dismissible fade show">
+                            <strong><i class="bi bi-exclamation-triangle-fill"></i> Fix the following:</strong>
+                            <ul class="mt-2 mb-0">
+                                <% errors.forEach(err => { %><li><%= err %></li><% }) %>
+                            </ul>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    <% } %>
+
+                    <div class="form-card p-4 p-md-5">
+                        <form action="/submit" method="POST" id="regForm" novalidate>
+                            <div class="row g-3">
+
+                                <%# Name %>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Full Name</label>
+                                    <input type="text" class="form-control" name="name" id="name"
+                                           placeholder="Your full name"
+                                           value="<%= typeof formData !== 'undefined' ? formData.name || '' : '' %>">
+                                    <span class="field-error" id="nameErr"></span>
+                                </div>
+
+                                <%# Email %>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Email Address</label>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                           placeholder="you@example.com"
+                                           value="<%= typeof formData !== 'undefined' ? formData.email || '' : '' %>">
+                                    <span class="field-error" id="emailErr"></span>
+                                </div>
+
+                                <%# Age %>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Age</label>
+                                    <input type="number" class="form-control" name="age" id="age"
+                                           placeholder="Your age"
+                                           value="<%= typeof formData !== 'undefined' ? formData.age || '' : '' %>">
+                                    <span class="field-error" id="ageErr"></span>
+                                </div>
+
+                                <%# Phone %>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Phone Number</label>
+                                    <input type="text" class="form-control" name="phone" id="phone"
+                                           placeholder="10-digit number"
+                                           value="<%= typeof formData !== 'undefined' ? formData.phone || '' : '' %>">
+                                    <span class="field-error" id="phoneErr"></span>
+                                </div>
+
+                                <%# Gender %>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Gender</label>
+                                    <select class="form-select" name="gender" id="gender">
+                                        <option value="">-- Select Gender --</option>
+                                        <option value="male"   <%= typeof formData !== 'undefined' && formData.gender === 'male'   ? 'selected' : '' %>>Male</option>
+                                        <option value="female" <%= typeof formData !== 'undefined' && formData.gender === 'female' ? 'selected' : '' %>>Female</option>
+                                        <option value="other"  <%= typeof formData !== 'undefined' && formData.gender === 'other'  ? 'selected' : '' %>>Other</option>
+                                    </select>
+                                    <span class="field-error" id="genderErr"></span>
+                                </div>
+
+                                <%# Password %>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" name="password" id="password"
+                                               placeholder="Create password">
+                                        <button class="btn btn-outline-secondary" type="button" id="togglePass">
+                                            <i class="bi bi-eye" id="eyeIcon"></i>
+                                        </button>
+                                    </div>
+                                    <%# Strength Bar %>
+                                    <div class="strength-bar mt-2">
+                                        <div class="strength-fill" id="strengthFill"></div>
+                                    </div>
+                                    <small class="strength-label" id="strengthLabel"></small>
+                                    <span class="field-error" id="passErr"></span>
+                                </div>
+
+                                <%# Confirm Password %>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Confirm Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" name="confirmPassword"
+                                               id="confirmPassword" placeholder="Repeat password">
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleConfirm">
+                                            <i class="bi bi-eye" id="eyeIcon2"></i>
+                                        </button>
+                                    </div>
+                                    <span class="field-error" id="confirmErr"></span>
+                                </div>
+
+                                <%# Message + character counter %>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">
+                                        Message
+                                        <span class="char-counter ms-2" id="charCounter">0 / 300</span>
+                                    </label>
+                                    <textarea class="form-control" name="message" id="message"
+                                              placeholder="Write something (min 10 characters)..."
+                                              rows="4" maxlength="300"><%= typeof formData !== 'undefined' ? formData.message || '' : '' %></textarea>
+                                    <span class="field-error" id="messageErr"></span>
+                                </div>
+
+                                <%# Terms checkbox %>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="terms">
+                                        <label class="form-check-label text-muted" for="terms">
+                                            I agree to the <a href="#" class="text-primary">Terms & Conditions</a>
+                                        </label>
+                                    </div>
+                                    <span class="field-error" id="termsErr"></span>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold submit-btn">
+                                        Create Account <i class="bi bi-person-check-fill ms-2"></i>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <%# Side info panel %>
+                <div class="col-lg-4 d-none d-lg-block">
+                    <div class="info-panel p-4">
+                        <h6 class="fw-bold mb-3">Password Requirements</h6>
+                        <ul class="req-list" id="reqList">
+                            <li id="req-length"><i class="bi bi-x-circle-fill me-2"></i>At least 8 characters</li>
+                            <li id="req-upper"><i class="bi bi-x-circle-fill me-2"></i>One uppercase letter</li>
+                            <li id="req-lower"><i class="bi bi-x-circle-fill me-2"></i>One lowercase letter</li>
+                            <li id="req-number"><i class="bi bi-x-circle-fill me-2"></i>One number</li>
+                            <li id="req-special"><i class="bi bi-x-circle-fill me-2"></i>One special character</li>
+                        </ul>
+
+                        <hr>
+
+                        <h6 class="fw-bold mb-3">Form Progress</h6>
+                        <div class="progress mb-2" style="height: 8px;">
+                            <div class="progress-bar bg-success" id="formProgress" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted" id="progressLabel">0 of 8 fields completed</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <%# ─── SECTION: SUBMISSIONS ─── %>
+    <section class="page-section" id="section-submissions">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold">All Submissions</h2>
+                <p class="text-muted">Registered users appear here in real time</p>
+            </div>
+
+            <div id="submissionsGrid">
+                <% if (submissions.length === 0) { %>
+                    <div class="text-center text-muted py-5" id="emptyState">
+                        <i class="bi bi-inbox display-3"></i>
+                        <p class="mt-3">No submissions yet. Be the first!</p>
+                        <button class="btn btn-primary mt-2" onclick="navigateTo('register')">
+                            Register Now
+                        </button>
+                    </div>
+                <% } else { %>
+                    <div class="row g-4" id="cardsRow">
+                        <% submissions.forEach((sub, index) => { %>
+                            <div class="col-md-6 col-lg-4 sub-col" data-index="<%= index %>">
+                                <div class="sub-card p-4 h-100">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="avatar me-3"><%= sub.name.charAt(0).toUpperCase() %></div>
+                                        <div>
+                                            <h6 class="mb-0 fw-bold"><%= sub.name %></h6>
+                                            <small class="text-muted"><%= sub.email %></small>
+                                        </div>
+                                    </div>
+                                    <p class="mb-1"><i class="bi bi-telephone me-2 text-primary"></i><%= sub.phone %></p>
+                                    <p class="mb-1"><i class="bi bi-person me-2 text-primary"></i><%= sub.gender %> · Age <%= sub.age %></p>
+                                    <p class="mb-0 text-muted fst-italic mt-2">"<%= sub.message %>"</p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <%# Footer %>
+    <footer class="footer py-4 text-center text-white">
+        <p class="mb-0">© 2024 Cognifyz Technologies · Task 4 — Dynamic DOM + Complex Validation</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // ─── CLIENT-SIDE ROUTING ───
+        function navigateTo(section) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active-section'));
+            document.querySelectorAll('.route-link').forEach(l => l.classList.remove('active-link'));
+
+            document.getElementById('section-' + section).classList.add('active-section');
+            document.querySelector(`[data-section="${section}"]`).classList.add('active-link');
+
+            window.location.hash = section;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.route-link').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                navigateTo(link.dataset.section);
+            });
+        });
+
+        // On load, check hash
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById('section-' + hash)) {
+                navigateTo(hash);
+            }
+
+            <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+                navigateTo('register');
+            <% } %>
+        });
+
+        // ─── PASSWORD TOGGLE ───
+        document.getElementById('togglePass').addEventListener('click', () => {
+            const p = document.getElementById('password');
+            const icon = document.getElementById('eyeIcon');
+            p.type = p.type === 'password' ? 'text' : 'password';
+            icon.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+
+        document.getElementById('toggleConfirm').addEventListener('click', () => {
+            const p = document.getElementById('confirmPassword');
+            const icon = document.getElementById('eyeIcon2');
+            p.type = p.type === 'password' ? 'text' : 'password';
+            icon.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+
+        // ─── PASSWORD STRENGTH ───
+        function checkStrength(password) {
+            let score = 0;
+            const checks = {
+                length:  password.length >= 8,
+                upper:   /[A-Z]/.test(password),
+                lower:   /[a-z]/.test(password),
+                number:  /[0-9]/.test(password),
+                special: /[@$!%*?&]/.test(password)
+            };
+
+            Object.values(checks).forEach(v => { if (v) score++; });
+
+            // Update requirement list
+            updateReq('req-length',  checks.length);
+            updateReq('req-upper',   checks.upper);
+            updateReq('req-lower',   checks.lower);
+            updateReq('req-number',  checks.number);
+            updateReq('req-special', checks.special);
+
+            // Update bar
+            const fill = document.getElementById('strengthFill');
+            const label = document.getElementById('strengthLabel');
+            const levels = ['', 'Very Weak', 'Weak', 'Fair', 'Strong', 'Very Strong'];
+            const colors = ['', '#ef4444', '#f97316', '#eab308', '#22c55e', '#16a34a'];
+            const widths = ['0%', '20%', '40%', '60%', '80%', '100%'];
+
+            fill.style.width = widths[score];
+            fill.style.background = colors[score];
+            label.textContent = levels[score];
+            label.style.color = colors[score];
+
+            return score;
+        }
+
+        function updateReq(id, passed) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.innerHTML = passed
+                ? `<i class="bi bi-check-circle-fill me-2 text-success"></i>${el.textContent.replace(/.*\s/, '')}`
+                : `<i class="bi bi-x-circle-fill me-2 text-danger"></i>${el.textContent.replace(/.*\s/, '')}`;
+        }
+
+        document.getElementById('password').addEventListener('input', function() {
+            checkStrength(this.value);
+            validateForm();
+        });
+
+        // ─── CHARACTER COUNTER ───
+        document.getElementById('message').addEventListener('input', function() {
+            const count = this.value.length;
+            const counter = document.getElementById('charCounter');
+            counter.textContent = `${count} / 300`;
+            counter.style.color = count >= 270 ? '#ef4444' : count >= 10 ? '#22c55e' : '#888';
+            validateForm();
+        });
+
+        // ─── FORM PROGRESS ───
+        function updateProgress() {
+            const fields = ['name', 'email', 'age', 'phone', 'gender', 'password', 'confirmPassword', 'message'];
+            let filled = 0;
+            fields.forEach(f => {
+                const el = document.getElementById(f) || document.querySelector(`[name="${f}"]`);
+                if (el && el.value.trim() !== '') filled++;
+            });
+            if (document.getElementById('terms').checked) filled++;
+
+            const total = fields.length + 1;
+            const pct = Math.round((filled / total) * 100);
+            document.getElementById('formProgress').style.width = pct + '%';
+            document.getElementById('progressLabel').textContent = `${filled} of ${total} fields completed`;
+        }
+
+        // ─── VALIDATION ───
+        function showErr(id, msg) { document.getElementById(id).textContent = msg; }
+        function clearErr(id)     { document.getElementById(id).textContent = ''; }
+
+        function validateForm() {
+            let isValid = true;
+
+            const name = document.getElementById('name').value.trim();
+            if (name.length < 2) { showErr('nameErr', 'Min 2 characters.'); isValid = false; }
+            else clearErr('nameErr');
+
+            const email = document.getElementById('email').value.trim();
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('emailErr', 'Valid email required.'); isValid = false; }
+            else clearErr('emailErr');
+
+            const age = document.getElementById('age').value;
+            if (!age || age < 1 || age > 120) { showErr('ageErr', 'Age must be 1–120.'); isValid = false; }
+            else clearErr('ageErr');
+
+            const phone = document.getElementById('phone').value.trim();
+            if (!/^[0-9]{10}$/.test(phone)) { showErr('phoneErr', '10-digit number required.'); isValid = false; }
+            else clearErr('phoneErr');
+
+            const gender = document.getElementById('gender').value;
+            if (!gender) { showErr('genderErr', 'Please select gender.'); isValid = false; }
+            else clearErr('genderErr');
+
+            const pass = document.getElementById('password').value;
+            const passRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passRegex.test(pass)) { showErr('passErr', 'Password does not meet requirements.'); isValid = false; }
+            else clearErr('passErr');
+
+            const confirm = document.getElementById('confirmPassword').value;
+            if (confirm !== pass) { showErr('confirmErr', 'Passwords do not match.'); isValid = false; }
+            else clearErr('confirmErr');
+
+            const message = document.getElementById('message').value.trim();
+            if (message.length < 10) { showErr('messageErr', 'Min 10 characters.'); isValid = false; }
+            else clearErr('messageErr');
+
+            if (!document.getElementById('terms').checked) {
+                showErr('termsErr', 'You must agree to the terms.');
+                isValid = false;
+            } else clearErr('termsErr');
+
+            updateProgress();
+            return isValid;
+        }
+
+        document.getElementById('regForm').addEventListener('submit', e => {
+            if (!validateForm()) e.preventDefault();
+        });
+
+        document.querySelectorAll('#regForm input, #regForm select, #regForm textarea').forEach(el => {
+            el.addEventListener('input', validateForm);
+            el.addEventListener('change', validateForm);
+        });
+
+        document.getElementById('terms').addEventListener('change', validateForm);
+    </script>
+
+</body>
+</html>

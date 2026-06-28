@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="container success-page">
+        <div class="success-icon">✅</div>
+        <h1>Submission Successful!</h1>
+        <p class="subtitle">Here's what we received:</p>
+
+        <div class="card">
+            <p><strong>Name:</strong> <%= data.name %></p>
+            <p><strong>Email:</strong> <%= data.email %></p>
+            <p><strong>Age:</strong> <%= data.age %></p>
+            <p><strong>Message:</strong> <%= data.message %></p>
+        </div>
+
+        <a href="/" class="btn">← Submit Another</a>
+    </div>
+
+</body>
+</html>

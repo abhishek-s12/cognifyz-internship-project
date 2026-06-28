@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognifyz · Level 3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <%# Navbar %>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <i class="bi bi-lightning-charge-fill text-warning"></i> Cognifyz
+            </a>
+            <div class="ms-auto d-flex gap-2">
+                <% if (user) { %>
+                    <a href="/dashboard" class="btn btn-warning btn-sm fw-bold">Dashboard</a>
+                    <button class="btn btn-outline-light btn-sm" id="logoutBtn">Logout</button>
+                <% } else { %>
+                    <button class="btn btn-outline-light btn-sm" onclick="showTab('login')">Login</button>
+                    <button class="btn btn-warning btn-sm fw-bold" onclick="showTab('register')">Register</button>
+                <% } %>
+            </div>
+        </div>
+    </nav>
+
+    <%# Hero %>
+    <section class="hero-section d-flex align-items-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-white">
+                    <div class="badge-pill mb-3">🚀 Level 3 · REST API + Auth + MongoDB</div>
+                    <h1 class="display-4 fw-bold mb-3">
+                        Full Stack <span class="text-warning">Authentication</span> System
+                    </h1>
+                    <p class="lead text-white-50 mb-4">
+                        RESTful API with JWT authentication, MongoDB storage, and protected routes.
+                    </p>
+                    <% if (!user) { %>
+                        <button class="btn btn-warning btn-lg px-5 fw-bold me-2" onclick="showTab('register')">
+                            Get Started <i class="bi bi-arrow-right"></i>
+                        </button>
+                        <button class="btn btn-outline-light btn-lg px-4" onclick="showTab('login')">
+                            Login
+                        </button>
+                    <% } else { %>
+                        <a href="/dashboard" class="btn btn-warning btn-lg px-5 fw-bold">
+                            Go to Dashboard <i class="bi bi-arrow-right"></i>
+                        </a>
+                    <% } %>
+                </div>
+
+                <%# Auth Forms %>
+                <% if (!user) { %>
+                <div class="col-lg-5 offset-lg-1 mt-5 mt-lg-0">
+                    <div class="auth-card p-4">
+
+                        <%# Tabs %>
+                        <div class="auth-tabs mb-4">
+                            <button class="auth-tab active" id="tab-register" onclick="showTab('register')">Register</button>
+                            <button class="auth-tab" id="tab-login" onclick="showTab('login')">Login</button>
+                        </div>
+
+                        <div id="alertBox"></div>
+
+                        <%# Register Form %>
+                        <div id="form-register">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Full Name</label>
+                                    <input type="text" class="form-control" id="reg-name" placeholder="Your name">
+                                    <span class="field-error" id="reg-nameErr"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Email</label>
+                                    <input type="email" class="form-control" id="reg-email" placeholder="you@example.com">
+                                    <span class="field-error" id="reg-emailErr"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Age</label>
+                                    <input type="number" class="form-control" id="reg-age" placeholder="Your age">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Phone</label>
+                                    <input type="text" class="form-control" id="reg-phone" placeholder="10-digit number">
+                                    <span class="field-error" id="reg-phoneErr"></span>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Gender</label>
+                                    <select class="form-select" id="reg-gender">
+                                        <option value="">-- Select --</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Password</label>
+                                    <input type="password" class="form-control" id="reg-password" placeholder="Create password">
+                                    <div class="strength-bar mt-1"><div class="strength-fill" id="strengthFill"></div></div>
+                                    <span class="field-error" id="reg-passErr"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Confirm Password</label>
+                                    <input type="password" class="form-control" id="reg-confirm" placeholder="Repeat password">
+                                    <span class="field-error" id="reg-confirmErr"></span>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-2 fw-bold submit-btn" id="registerBtn">
+                                        Create Account <i class="bi bi-person-plus-fill ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <%# Login Form %>
+                        <div id="form-login" style="display:none;">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Email</label>
+                                    <input type="email" class="form-control" id="login-email" placeholder="you@example.com">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Password</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="login-password" placeholder="Your password">
+                                        <button class="btn btn-outline-secondary" type="button" id="toggleLoginPass">
+                                            <i class="bi bi-eye" id="loginEye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-2 fw-bold submit-btn" id="loginBtn">
+                                        Login <i class="bi bi-box-arrow-in-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showTab(tab) {
+            document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+            document.getElementById('form-login').style.display    = tab === 'login'    ? 'block' : 'none';
+            document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+            document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+            document.getElementById('alertBox').innerHTML = '';
+        }
+
+        function showAlert(msg, type = 'danger') {
+            document.getElementById('alertBox').innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show py-2">
+                    ${msg}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>`;
+        }
+
+        function showFieldErr(id, msg) { document.getElementById(id).textContent = msg; }
+        function clearFieldErr(id)     { document.getElementById(id).textContent = ''; }
+
+        // Password strength
+        document.getElementById('reg-password')?.addEventListener('input', function() {
+            const val = this.value;
+            let score = [val.length >= 8, /[A-Z]/.test(val), /[a-z]/.test(val),
+                         /[0-9]/.test(val), /[@$!%*?&]/.test(val)].filter(Boolean).length;
+            const fill = document.getElementById('strengthFill');
+            const colors = ['','#ef4444','#f97316','#eab308','#22c55e','#16a34a'];
+            fill.style.width = (score * 20) + '%';
+            fill.style.background = colors[score];
+        });
+
+        // Toggle login password
+        document.getElementById('toggleLoginPass')?.addEventListener('click', () => {
+            const p = document.getElementById('login-password');
+            const icon = document.getElementById('loginEye');
+            p.type = p.type === 'password' ? 'text' : 'password';
+            icon.className = p.type === 'password' ? 'bi bi-eye' : 'bi bi-eye-slash';
+        });
+
+        // Register
+        document.getElementById('registerBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('registerBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
+
+            const body = {
+                name:            document.getElementById('reg-name').value,
+                email:           document.getElementById('reg-email').value,
+                age:             document.getElementById('reg-age').value,
+                phone:           document.getElementById('reg-phone').value,
+                gender:          document.getElementById('reg-gender').value,
+                password:        document.getElementById('reg-password').value,
+                confirmPassword: document.getElementById('reg-confirm').value
+            };
+
+            try {
+                const res  = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showAlert(`✅ Welcome, ${data.user.name}! Redirecting...`, 'success');
+                    setTimeout(() => window.location.href = '/dashboard', 1200);
+                } else {
+                    showAlert('<ul class="mb-0">' + data.errors.map(e => `<li>${e}</li>`).join('') + '</ul>');
+                    btn.disabled = false;
+                    btn.innerHTML = 'Create Account <i class="bi bi-person-plus-fill ms-1"></i>';
+                }
+            } catch {
+                showAlert('Network error. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = 'Create Account <i class="bi bi-person-plus-fill ms-1"></i>';
+            }
+        });
+
+        // Login
+        document.getElementById('loginBtn')?.addEventListener('click', async () => {
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Logging in...';
+
+            const body = {
+                email:    document.getElementById('login-email').value,
+                password: document.getElementById('login-password').value
+            };
+
+            try {
+                const res  = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showAlert(`✅ Welcome back, ${data.user.name}! Redirecting...`, 'success');
+                    setTimeout(() => window.location.href = '/dashboard', 1200);
+                } else {
+                    showAlert(data.errors.join('<br>'));
+                    btn.disabled = false;
+                    btn.innerHTML = 'Login <i class="bi bi-box-arrow-in-right ms-1"></i>';
+                }
+            } catch {
+                showAlert('Network error. Please try again.');
+                btn.disabled = false;
+                btn.innerHTML = 'Login <i class="bi bi-box-arrow-in-right ms-1"></i>';
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+            await fetch('/auth/logout', { method: 'POST' });
+            window.location.href = '/';
+        });
+    </script>
+</body>
+</html>

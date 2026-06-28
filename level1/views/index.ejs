@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>📋 User Registration</h1>
+    <p class="subtitle">Fill in all fields correctly to register.</p>
+
+    <%# Show server-side errors if any %>
+    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+        <div class="error-box">
+            <strong>⚠️ Please fix the following:</strong>
+            <ul>
+                <% errors.forEach(err => { %>
+                    <li><%= err %></li>
+                <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <form action="/submit" method="POST" id="regForm" novalidate>
+
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name"
+                   placeholder="Enter your full name"
+                   value="<%= typeof formData !== 'undefined' ? formData.name : '' %>">
+            <span class="field-error" id="nameErr"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email"
+                   placeholder="Enter your email"
+                   value="<%= typeof formData !== 'undefined' ? formData.email : '' %>">
+            <span class="field-error" id="emailErr"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age"
+                   placeholder="Enter your age (1-120)"
+                   value="<%= typeof formData !== 'undefined' ? formData.age : '' %>">
+            <span class="field-error" id="ageErr"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="text" id="phone" name="phone"
+                   placeholder="10-digit phone number"
+                   value="<%= typeof formData !== 'undefined' ? formData.phone : '' %>">
+            <span class="field-error" id="phoneErr"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender">
+                <option value="">-- Select Gender --</option>
+                <option value="male"   <%= typeof formData !== 'undefined' && formData.gender === 'male'   ? 'selected' : '' %>>Male</option>
+                <option value="female" <%= typeof formData !== 'undefined' && formData.gender === 'female' ? 'selected' : '' %>>Female</option>
+                <option value="other"  <%= typeof formData !== 'undefined' && formData.gender === 'other'  ? 'selected' : '' %>>Other</option>
+            </select>
+            <span class="field-error" id="genderErr"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message"
+                      placeholder="Write something (min 10 characters)..."
+                      rows="4"><%= typeof formData !== 'undefined' ? formData.message : '' %></textarea>
+            <span class="field-error" id="messageErr"></span>
+        </div>
+
+        <button type="submit" class="btn">Submit →</button>
+    </form>
+
+    <% if (submissions.length > 0) { %>
+    <div class="previous">
+        <h2>✅ Previous Submissions (<%= submissions.length %>)</h2>
+        <% submissions.forEach(sub => { %>
+            <div class="card">
+                <p><strong>Name:</strong> <%= sub.name %></p>
+                <p><strong>Email:</strong> <%= sub.email %></p>
+                <p><strong>Age:</strong> <%= sub.age %></p>
+                <p><strong>Phone:</strong> <%= sub.phone %></p>
+                <p><strong>Gender:</strong> <%= sub.gender %></p>
+                <p><strong>Message:</strong> <%= sub.message %></p>
+            </div>
+        <% }) %>
+    </div>
+    <% } %>
+</div>
+
+<%# INLINE CLIENT-SIDE VALIDATION %>
+<script>
+    const form = document.getElementById('regForm');
+
+    function showError(id, msg) {
+        document.getElementById(id).textContent = msg;
+    }
+
+    function clearError(id) {
+        document.getElementById(id).textContent = '';
+    }
+
+    function validateForm() {
+        let isValid = true;
+
+        // Name: required, at least 2 chars
+        const name = document.getElementById('name').value.trim();
+        if (name === '') {
+            showError('nameErr', 'Name is required.');
+            isValid = false;
+        } else if (name.length < 2) {
+            showError('nameErr', 'Name must be at least 2 characters.');
+            isValid = false;
+        } else {
+            clearError('nameErr');
+        }
+
+        // Email: required, valid format
+        const email = document.getElementById('email').value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email === '') {
+            showError('emailErr', 'Email is required.');
+            isValid = false;
+        } else if (!emailRegex.test(email)) {
+            showError('emailErr', 'Enter a valid email address.');
+            isValid = false;
+        } else {
+            clearError('emailErr');
+        }
+
+        // Age: required, 1-120
+        const age = document.getElementById('age').value;
+        if (age === '') {
+            showError('ageErr', 'Age is required.');
+            isValid = false;
+        } else if (age < 1 || age > 120) {
+            showError('ageErr', 'Age must be between 1 and 120.');
+            isValid = false;
+        } else {
+            clearError('ageErr');
+        }
+
+        // Phone: required, exactly 10 digits
+        const phone = document.getElementById('phone').value.trim();
+        const phoneRegex = /^[0-9]{10}$/;
+        if (phone === '') {
+            showError('phoneErr', 'Phone number is required.');
+            isValid = false;
+        } else if (!phoneRegex.test(phone)) {
+            showError('phoneErr', 'Enter a valid 10-digit phone number.');
+            isValid = false;
+        } else {
+            clearError('phoneErr');
+        }
+
+        // Gender: must select one
+        const gender = document.getElementById('gender').value;
+        if (gender === '') {
+            showError('genderErr', 'Please select your gender.');
+            isValid = false;
+        } else {
+            clearError('genderErr');
+        }
+
+        // Message: min 10 characters
+        const message = document.getElementById('message').value.trim();
+        if (message === '') {
+            showError('messageErr', 'Message is required.');
+            isValid = false;
+        } else if (message.length < 10) {
+            showError('messageErr', 'Message must be at least 10 characters.');
+            isValid = false;
+        } else {
+            clearError('messageErr');
+        }
+
+        return isValid;
+    }
+
+    form.addEventListener('submit', function(e) {
+        if (!validateForm()) {
+            e.preventDefault();
+        }
+    });
+
+    // Real-time validation on input
+    document.getElementById('name').addEventListener('input', () => validateForm());
+    document.getElementById('email').addEventListener('input', () => validateForm());
+    document.getElementById('age').addEventListener('input', () => validateForm());
+    document.getElementById('phone').addEventListener('input', () => validateForm());
+    document.getElementById('gender').addEventListener('change', () => validateForm());
+    document.getElementById('message').addEventListener('input', () => validateForm());
+</script>
+
+</body>
+</html>
