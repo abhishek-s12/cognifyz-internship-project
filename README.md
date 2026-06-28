@@ -38,4 +38,4 @@ Internship tasks completed for Cognifyz Technologies.
 5. Run `node server.js`
 
 ## Author
-Your Name — Cognifyz Technologies Internship 2024
+Abhishek Kumar
