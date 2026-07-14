@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
-<body class="dashboard-body">
+<body class="dashboard-page-body">
 
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid px-4">
@@ -27,30 +27,30 @@
         </div>
     </nav>
 
-    <div class="dashboard-layout">
+    <div class="dashboard-page-layout">
 
-        <aside class="sidebar">
-            <div class="sidebar-item active" onclick="loadSection('users')"   id="nav-users">
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-sidebar-item active" onclick="loadSection('users')"   id="nav-users">
                 <i class="bi bi-people-fill"></i><span>All Users</span>
             </div>
-            <div class="sidebar-item" onclick="loadSection('weather')"  id="nav-weather">
+            <div class="dashboard-sidebar-item" onclick="loadSection('weather')"  id="nav-weather">
                 <i class="bi bi-cloud-sun-fill"></i><span>Weather API</span>
             </div>
-            <div class="sidebar-item" onclick="loadSection('profile')"  id="nav-profile">
+            <div class="dashboard-sidebar-item" onclick="loadSection('profile')"  id="nav-profile">
                 <i class="bi bi-person-fill"></i><span>My Profile</span>
             </div>
-            <div class="sidebar-item" onclick="loadSection('cache')"    id="nav-cache">
+            <div class="dashboard-sidebar-item" onclick="loadSection('cache')"    id="nav-cache">
                 <i class="bi bi-lightning-fill"></i><span>Cache Stats</span>
             </div>
-            <div class="sidebar-item" onclick="loadSection('api')"      id="nav-api">
+            <div class="dashboard-sidebar-item" onclick="loadSection('api')"      id="nav-api">
                 <i class="bi bi-braces"></i><span>API Explorer</span>
             </div>
         </aside>
 
-        <main class="dash-main p-4">
+        <main class="dashboard-main-content p-4">
 
             <%# Users Section %>
-            <div class="dash-section active-dash" id="section-users">
+            <div class="dashboard-content-section active-dashboard-section" id="section-users">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h4 class="fw-bold mb-0">All Registered Users</h4>
                     <button class="btn btn-primary btn-sm" onclick="fetchUsers()">
@@ -66,7 +66,7 @@
             </div>
 
             <%# Weather Section — Task 7 %>
-            <div class="dash-section" id="section-weather">
+            <div class="dashboard-content-section" id="section-weather">
                 <h4 class="fw-bold mb-2">Weather API</h4>
                 <p class="text-muted mb-4">
                     Live weather via OpenWeatherMap · Results cached for 5 minutes
@@ -74,7 +74,7 @@
 
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <div class="weather-search-card p-4 mb-4">
+                        <div class="weather-search-container-card p-4 mb-4">
                             <label class="form-label fw-semibold">Search City</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="cityInput"
@@ -98,13 +98,13 @@
             </div>
 
             <%# Profile Section %>
-            <div class="dash-section" id="section-profile">
+            <div class="dashboard-content-section" id="section-profile">
                 <h4 class="fw-bold mb-4">My Profile</h4>
                 <div class="row">
                     <div class="col-lg-6">
-                        <div class="profile-card p-4">
+                        <div class="user-profile-card p-4">
                             <div class="text-center mb-4">
-                                <div class="profile-avatar mx-auto mb-3">
+                                <div class="user-profile-avatar mx-auto mb-3">
                                     <%= user.name.charAt(0).toUpperCase() %>
                                 </div>
                                 <h5 class="fw-bold"><%= user.name %></h5>
@@ -134,7 +134,7 @@
                                     </select>
                                 </div>
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 fw-bold submit-btn" id="updateBtn">
+                                    <button class="btn btn-primary w-100 fw-bold form-submit-button" id="updateBtn">
                                         Update Profile <i class="bi bi-check-circle ms-1"></i>
                                     </button>
                                 </div>
@@ -150,7 +150,7 @@
             </div>
 
             <%# Cache Stats — Task 8 %>
-            <div class="dash-section" id="section-cache">
+            <div class="dashboard-content-section" id="section-cache">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
                         <h4 class="fw-bold mb-1">Cache Statistics</h4>
@@ -168,12 +168,12 @@
             </div>
 
             <%# API Explorer %>
-            <div class="dash-section" id="section-api">
+            <div class="dashboard-content-section" id="section-api">
                 <h4 class="fw-bold mb-2">API Explorer</h4>
                 <p class="text-muted mb-4">Live REST API — click to test endpoints directly</p>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <div class="api-card p-4">
+                        <div class="api-endpoint-card p-4">
                             <span class="method-badge get">GET</span>
                             <code class="ms-2">/api/users</code>
                             <p class="text-muted small mt-2 mb-2">Fetch all users (cached)</p>
@@ -186,7 +186,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="api-card p-4">
+                        <div class="api-endpoint-card p-4">
                             <span class="method-badge get">GET</span>
                             <code class="ms-2">/api/weather/:city</code>
                             <p class="text-muted small mt-2 mb-2">External API + 5min cache</p>
@@ -199,7 +199,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="api-card p-4">
+                        <div class="api-endpoint-card p-4">
                             <span class="method-badge put">PUT</span>
                             <code class="ms-2">/api/users/:id</code>
                             <p class="text-muted small mt-2 mb-2">Update profile + invalidate cache</p>
@@ -207,7 +207,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="api-card p-4">
+                        <div class="api-endpoint-card p-4">
                             <span class="method-badge get">GET</span>
                             <code class="ms-2">/api/cache/stats</code>
                             <p class="text-muted small mt-2 mb-2">View cache hit/miss stats</p>
@@ -221,7 +221,7 @@
                 </div>
                 <div class="mt-4">
                     <h6 class="fw-bold">API Response</h6>
-                    <pre class="api-response" id="apiResponse">// Click "Try it" to see live response</pre>
+                    <pre class="api-response-container" id="apiResponse">// Click "Try it" to see live response</pre>
                 </div>
             </div>
 
@@ -233,9 +233,9 @@
         const USER_ID = '<%= user.id %>';
 
         function loadSection(name) {
-            document.querySelectorAll('.dash-section').forEach(s => s.classList.remove('active-dash'));
-            document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
-            document.getElementById('section-' + name).classList.add('active-dash');
+            document.querySelectorAll('.dashboard-content-section').forEach(s => s.classList.remove('active-dashboard-section'));
+            document.querySelectorAll('.dashboard-sidebar-item').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-' + name).classList.add('active-dashboard-section');
             document.getElementById('nav-' + name).classList.add('active');
             if (name === 'users')  fetchUsers();
             if (name === 'cache')  fetchCacheStats();
@@ -267,9 +267,9 @@
                     <div class="row g-3">
                         ${data.users.map(u => `
                             <div class="col-md-6 col-lg-4">
-                                <div class="sub-card p-3 h-100">
+                                <div class="submission-record-card p-3 h-100">
                                     <div class="d-flex align-items-center mb-2">
-                                        <div class="avatar me-3">${u.name.charAt(0).toUpperCase()}</div>
+                                        <div class="user-avatar-circle me-3">${u.name.charAt(0).toUpperCase()}</div>
                                         <div>
                                             <h6 class="mb-0 fw-bold">${u.name}</h6>
                                             <small class="text-muted">${u.email}</small>
@@ -307,7 +307,7 @@
                     : '<span class="badge bg-secondary">🌐 Live API</span>';
 
                 result.innerHTML = `
-                    <div class="weather-card p-4 text-center">
+                    <div class="weather-display-card p-4 text-center">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div></div>
                             ${sourceBadge}
@@ -319,21 +319,21 @@
                         <h4 class="fw-bold">${w.city}, ${w.country}</h4>
                         <div class="row g-3 mt-3">
                             <div class="col-4">
-                                <div class="weather-stat">
+                                <div class="weather-statistic-box">
                                     <i class="bi bi-thermometer-half text-danger"></i>
                                     <p class="mb-0 fw-bold">${w.feels_like}°C</p>
                                     <small class="text-muted">Feels Like</small>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="weather-stat">
+                                <div class="weather-statistic-box">
                                     <i class="bi bi-droplet-fill text-primary"></i>
                                     <p class="mb-0 fw-bold">${w.humidity}%</p>
                                     <small class="text-muted">Humidity</small>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="weather-stat">
+                                <div class="weather-statistic-box">
                                     <i class="bi bi-wind text-success"></i>
                                     <p class="mb-0 fw-bold">${w.wind} m/s</p>
                                     <small class="text-muted">Wind</small>
@@ -377,25 +377,25 @@
                 document.getElementById('cacheStats').innerHTML = `
                     <div class="row g-3 mb-4">
                         <div class="col-md-3">
-                            <div class="cache-stat-card text-center p-3">
+                            <div class="cache-statistics-card text-center p-3">
                                 <h3 class="fw-bold text-primary">${s.hits}</h3>
                                 <p class="text-muted mb-0">Cache Hits</p>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="cache-stat-card text-center p-3">
+                            <div class="cache-statistics-card text-center p-3">
                                 <h3 class="fw-bold text-danger">${s.misses}</h3>
                                 <p class="text-muted mb-0">Cache Misses</p>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="cache-stat-card text-center p-3">
+                            <div class="cache-statistics-card text-center p-3">
                                 <h3 class="fw-bold text-success">${s.keys}</h3>
                                 <p class="text-muted mb-0">Cached Keys</p>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="cache-stat-card text-center p-3">
+                            <div class="cache-statistics-card text-center p-3">
                                 <h3 class="fw-bold text-warning">${s.ksize + s.vsize}</h3>
                                 <p class="text-muted mb-0">Memory (bytes)</p>
                             </div>

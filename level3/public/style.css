@@ -10,7 +10,7 @@ body {
     background: #f8fafc;
     padding-top: 70px;
 }
-.dashboard-body { background: #f1f5f9; }
+.dashboard-page-body { background: #f1f5f9; }
 
 /* Navbar */
 .navbar {
@@ -21,13 +21,13 @@ body {
 .navbar-brand { font-size: 1.3rem; }
 
 /* Hero */
-.hero-section {
+.hero-banner-section {
     min-height: calc(100vh - 70px);
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
     padding: 4rem 0;
 }
 
-.badge-pill {
+.pill-style-badge {
     display: inline-block;
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
@@ -38,17 +38,17 @@ body {
 }
 
 /* Auth Card */
-.auth-card {
+.authentication-card {
     background: white;
     border-radius: 16px;
     box-shadow: 0 25px 60px rgba(0,0,0,0.25);
 }
 
-.auth-tabs {
+.authentication-tabs-container {
     display: flex;
     border-bottom: 2px solid #e2e8f0;
 }
-.auth-tab {
+.authentication-tab-button {
     flex: 1;
     padding: 0.75rem;
     background: none;
@@ -60,7 +60,7 @@ body {
     border-bottom: 2px solid transparent;
     margin-bottom: -2px;
 }
-.auth-tab.active {
+.authentication-tab-button.active {
     color: var(--primary);
     border-bottom-color: var(--primary);
 }
@@ -77,18 +77,18 @@ body {
     box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
 }
 
-.submit-btn {
+.form-submit-button {
     background: linear-gradient(135deg, #4f46e5, #7c3aed);
     border: none;
     border-radius: 10px;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-.submit-btn:hover {
+.form-submit-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(79,70,229,0.4);
 }
 
-.field-error {
+.form-field-error {
     color: #e53e3e;
     font-size: 0.78rem;
     margin-top: 0.25rem;
@@ -97,13 +97,13 @@ body {
 }
 
 /* Strength bar */
-.strength-bar {
+.password-strength-bar {
     height: 4px;
     background: #e2e8f0;
     border-radius: 10px;
     overflow: hidden;
 }
-.strength-fill {
+.password-strength-fill {
     height: 100%;
     width: 0%;
     border-radius: 10px;
@@ -111,12 +111,12 @@ body {
 }
 
 /* Dashboard Layout */
-.dashboard-layout {
+.dashboard-page-layout {
     display: flex;
     min-height: calc(100vh - 70px);
 }
 
-.sidebar {
+.dashboard-sidebar {
     width: var(--sidebar-w);
     background: white;
     border-right: 1px solid #e2e8f0;
@@ -127,7 +127,7 @@ body {
     height: calc(100vh - 70px);
 }
 
-.sidebar-item {
+.dashboard-sidebar-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -138,25 +138,25 @@ body {
     transition: all 0.2s;
     border-left: 3px solid transparent;
 }
-.sidebar-item:hover {
+.dashboard-sidebar-item:hover {
     background: #f8fafc;
     color: var(--primary);
 }
-.sidebar-item.active {
+.dashboard-sidebar-item.active {
     color: var(--primary);
     background: #eef2ff;
     border-left-color: var(--primary);
     font-weight: 600;
 }
 
-.dash-main {
+.dashboard-main-content {
     margin-left: var(--sidebar-w);
     flex: 1;
     padding: 2rem;
 }
 
-.dash-section { display: none; animation: fadeIn 0.3s ease; }
-.active-dash  { display: block; }
+.dashboard-content-section { display: none; animation: fadeIn 0.3s ease; }
+.active-dashboard-section  { display: block; }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -164,18 +164,18 @@ body {
 }
 
 /* Cards */
-.sub-card {
+.submission-record-card {
     background: white;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
     transition: transform 0.2s, box-shadow 0.2s;
 }
-.sub-card:hover {
+.submission-record-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
-.avatar {
+.user-avatar-circle {
     width: 42px; height: 42px;
     background: linear-gradient(135deg, #4f46e5, #7c3aed);
     color: white;
@@ -189,12 +189,12 @@ body {
 }
 
 /* Profile */
-.profile-card {
+.user-profile-card {
     background: white;
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.07);
 }
-.profile-avatar {
+.user-profile-avatar {
     width: 70px; height: 70px;
     background: linear-gradient(135deg, #4f46e5, #7c3aed);
     color: white;
@@ -224,7 +224,7 @@ body {
 .method-badge.put    { background: #fef9c3; color: #a16207; }
 .method-badge.delete { background: #fee2e2; color: #dc2626; }
 
-.api-response {
+.api-response-container {
     background: #0f172a;
     color: #a5f3fc;
     border-radius: 10px;

@@ -10,7 +10,7 @@
 
 <div class="container">
     <h1>User Registration</h1>
-    <p class="subtitle">Fill in all fields correctly to register.</p>
+    <p class="form-subtitle">Fill in all fields correctly to register.</p>
 
     <%# Show server-side errors if any %>
     <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
@@ -26,7 +26,7 @@
 
     <form action="/submit" method="POST" id="regForm" novalidate>
 
-        <div class="form-group">
+        <div class="form-field-group">
             <label for="name">Full Name</label>
             <input type="text" id="name" name="name"
                    placeholder="Enter your full name"
@@ -34,7 +34,7 @@
             <span class="field-error" id="nameErr"></span>
         </div>
 
-        <div class="form-group">
+        <div class="form-field-group">
             <label for="email">Email Address</label>
             <input type="email" id="email" name="email"
                    placeholder="Enter your email"
@@ -42,7 +42,7 @@
             <span class="field-error" id="emailErr"></span>
         </div>
 
-        <div class="form-group">
+        <div class="form-field-group">
             <label for="age">Age</label>
             <input type="number" id="age" name="age"
                    placeholder="Enter your age"
@@ -50,7 +50,7 @@
             <span class="field-error" id="ageErr"></span>
         </div>
 
-        <div class="form-group">
+        <div class="form-field-group">
             <label for="phone">Phone Number</label>
             <input type="text" id="phone" name="phone"
                    placeholder="Valid phone number"
@@ -58,7 +58,7 @@
             <span class="field-error" id="phoneErr"></span>
         </div>
 
-        <div class="form-group">
+        <div class="form-field-group">
             <label for="gender">Gender</label>
             <select id="gender" name="gender">
                 <option value="">-- Select Gender --</option>
@@ -69,7 +69,7 @@
             <span class="field-error" id="genderErr"></span>
         </div>
 
-        <div class="form-group">
+        <div class="form-field-group">
             <label for="message">Message</label>
             <textarea id="message" name="message"
                       placeholder="Write something (min 10 characters)..."
@@ -77,14 +77,14 @@
             <span class="field-error" id="messageErr"></span>
         </div>
 
-        <button type="submit" class="btn">Submit →</button>
+        <button type="submit" class="action-button">Submit →</button>
     </form>
 
     <% if (submissions.length > 0) { %>
-    <div class="previous">
+    <div class="previous-submissions-section">
         <h2>Previous Submissions (<%= submissions.length %>)</h2>
         <% submissions.forEach(sub => { %>
-            <div class="card">
+            <div class="submission-card">
                 <p><strong>Name:</strong> <%= sub.name %></p>
                 <p><strong>Email:</strong> <%= sub.email %></p>
                 <p><strong>Age:</strong> <%= sub.age %></p>

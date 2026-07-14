@@ -8,19 +8,19 @@
 </head>
 <body>
 
-    <div class="container success-page">
-        <div class="success-icon">✅</div>
+    <div class="container success-page-container">
+        <div class="success-status-icon">✅</div>
         <h1>Submission Successful!</h1>
-        <p class="subtitle">Here's what we received:</p>
+        <p class="form-subtitle">Here's what we received:</p>
 
-        <div class="card">
+        <div class="submission-card">
             <p><strong>Name:</strong> <%= data.name %></p>
             <p><strong>Email:</strong> <%= data.email %></p>
             <p><strong>Age:</strong> <%= data.age %></p>
             <p><strong>Message:</strong> <%= data.message %></p>
         </div>
 
-        <a href="/" class="btn">← Submit Another</a>
+        <a href="/" class="action-button">← Submit Another</a>
     </div>
 
 </body>

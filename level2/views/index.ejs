@@ -22,13 +22,13 @@
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link route-link active-link" href="#" data-section="home">Home</a>
+                        <a class="nav-link navigation-route-link active-navigation-link" href="#" data-section="home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link route-link" href="#" data-section="register">Register</a>
+                        <a class="nav-link navigation-route-link" href="#" data-section="register">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link route-link" href="#" data-section="submissions">
+                        <a class="nav-link navigation-route-link" href="#" data-section="submissions">
                             Submissions
                             <span class="badge bg-warning text-dark ms-1" id="subCount"><%= submissions.length %></span>
                         </a>
@@ -39,18 +39,18 @@
     </nav>
 
     <%# ─── SECTION: HOME ─── %>
-    <section class="page-section active-section" id="section-home">
-        <div class="hero-section d-flex align-items-center">
+    <section class="page-content-section active-page-section" id="section-home">
+        <div class="hero-banner-section d-flex align-items-center">
             <div class="container text-center text-white">
-                <div class="hero-content">
-                    <div class="badge-pill mb-3">✨ Full Stack Internship · Cognifyz Technologies</div>
+                <div class="hero-banner-content">
+                    <div class="pill-style-badge mb-3">✨ Full Stack Internship · Cognifyz Technologies</div>
                     <h1 class="display-4 fw-bold mb-3">
                         Where Data Meets <span class="text-warning">Intelligence</span>
                     </h1>
                     <p class="lead mb-4 text-white-50">
                         Register to join our growing community of developers and data enthusiasts.
                     </p>
-                    <button class="btn btn-warning btn-lg px-5 fw-bold hero-btn me-2" onclick="navigateTo('register')">
+                    <button class="btn btn-warning btn-lg px-5 fw-bold hero-banner-button me-2" onclick="navigateTo('register')">
                         Register Now <i class="bi bi-arrow-right"></i>
                     </button>
                     <button class="btn btn-outline-light btn-lg px-4" onclick="navigateTo('submissions')">
@@ -61,18 +61,18 @@
                 <%# Stats Row %>
                 <div class="row justify-content-center mt-5 g-3">
                     <div class="col-auto">
-                        <div class="stat-chip">
+                        <div class="statistics-chip">
                             <i class="bi bi-people-fill me-2"></i>
                             <span id="heroSubCount"><%= submissions.length %></span> Registered
                         </div>
                     </div>
                     <div class="col-auto">
-                        <div class="stat-chip">
+                        <div class="statistics-chip">
                             <i class="bi bi-shield-check me-2"></i> Secure & Validated
                         </div>
                     </div>
                     <div class="col-auto">
-                        <div class="stat-chip">
+                        <div class="statistics-chip">
                             <i class="bi bi-phone me-2"></i> Fully Responsive
                         </div>
                     </div>
@@ -82,7 +82,7 @@
     </section>
 
     <%# ─── SECTION: REGISTER ─── %>
-    <section class="page-section" id="section-register">
+    <section class="page-content-section" id="section-register">
         <div class="container py-5">
             <div class="text-center mb-5">
                 <h2 class="fw-bold">Create Your Account</h2>
@@ -102,7 +102,7 @@
                         </div>
                     <% } %>
 
-                    <div class="form-card p-4 p-md-5">
+                    <div class="registration-form-card p-4 p-md-5">
                         <form action="/submit" method="POST" id="regForm" novalidate>
                             <div class="row g-3">
 
@@ -112,7 +112,7 @@
                                     <input type="text" class="form-control" name="name" id="name"
                                            placeholder="Your full name"
                                            value="<%= typeof formData !== 'undefined' ? formData.name || '' : '' %>">
-                                    <span class="field-error" id="nameErr"></span>
+                                    <span class="form-field-error" id="nameErr"></span>
                                 </div>
 
                                 <%# Email %>
@@ -121,7 +121,7 @@
                                     <input type="email" class="form-control" name="email" id="email"
                                            placeholder="you@example.com"
                                            value="<%= typeof formData !== 'undefined' ? formData.email || '' : '' %>">
-                                    <span class="field-error" id="emailErr"></span>
+                                    <span class="form-field-error" id="emailErr"></span>
                                 </div>
 
                                 <%# Age %>
@@ -130,7 +130,7 @@
                                     <input type="number" class="form-control" name="age" id="age"
                                            placeholder="Your age"
                                            value="<%= typeof formData !== 'undefined' ? formData.age || '' : '' %>">
-                                    <span class="field-error" id="ageErr"></span>
+                                    <span class="form-field-error" id="ageErr"></span>
                                 </div>
 
                                 <%# Phone %>
@@ -139,7 +139,7 @@
                                     <input type="text" class="form-control" name="phone" id="phone"
                                            placeholder="10-digit number"
                                            value="<%= typeof formData !== 'undefined' ? formData.phone || '' : '' %>">
-                                    <span class="field-error" id="phoneErr"></span>
+                                    <span class="form-field-error" id="phoneErr"></span>
                                 </div>
 
                                 <%# Gender %>
@@ -151,7 +151,7 @@
                                         <option value="female" <%= typeof formData !== 'undefined' && formData.gender === 'female' ? 'selected' : '' %>>Female</option>
                                         <option value="other"  <%= typeof formData !== 'undefined' && formData.gender === 'other'  ? 'selected' : '' %>>Other</option>
                                     </select>
-                                    <span class="field-error" id="genderErr"></span>
+                                    <span class="form-field-error" id="genderErr"></span>
                                 </div>
 
                                 <%# Password %>
@@ -165,11 +165,11 @@
                                         </button>
                                     </div>
                                     <%# Strength Bar %>
-                                    <div class="strength-bar mt-2">
-                                        <div class="strength-fill" id="strengthFill"></div>
+                                    <div class="password-strength-bar mt-2">
+                                        <div class="password-strength-fill" id="strengthFill"></div>
                                     </div>
-                                    <small class="strength-label" id="strengthLabel"></small>
-                                    <span class="field-error" id="passErr"></span>
+                                    <small class="password-strength-label" id="strengthLabel"></small>
+                                    <span class="form-field-error" id="passErr"></span>
                                 </div>
 
                                 <%# Confirm Password %>
@@ -182,19 +182,19 @@
                                             <i class="bi bi-eye" id="eyeIcon2"></i>
                                         </button>
                                     </div>
-                                    <span class="field-error" id="confirmErr"></span>
+                                    <span class="form-field-error" id="confirmErr"></span>
                                 </div>
 
                                 <%# Message + character counter %>
                                 <div class="col-12">
                                     <label class="form-label fw-semibold">
                                         Message
-                                        <span class="char-counter ms-2" id="charCounter">0 / 300</span>
+                                        <span class="character-count-indicator ms-2" id="charCounter">0 / 300</span>
                                     </label>
                                     <textarea class="form-control" name="message" id="message"
                                               placeholder="Write something (min 10 characters)..."
                                               rows="4" maxlength="300"><%= typeof formData !== 'undefined' ? formData.message || '' : '' %></textarea>
-                                    <span class="field-error" id="messageErr"></span>
+                                    <span class="form-field-error" id="messageErr"></span>
                                 </div>
 
                                 <%# Terms checkbox %>
@@ -205,11 +205,11 @@
                                             I agree to the <a href="#" class="text-primary">Terms & Conditions</a>
                                         </label>
                                     </div>
-                                    <span class="field-error" id="termsErr"></span>
+                                    <span class="form-field-error" id="termsErr"></span>
                                 </div>
 
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold submit-btn">
+                                    <button type="submit" class="btn btn-primary w-100 py-3 fw-bold form-submit-button">
                                         Create Account <i class="bi bi-person-check-fill ms-2"></i>
                                     </button>
                                 </div>
@@ -221,9 +221,9 @@
 
                 <%# Side info panel %>
                 <div class="col-lg-4 d-none d-lg-block">
-                    <div class="info-panel p-4">
+                    <div class="information-side-panel p-4">
                         <h6 class="fw-bold mb-3">Password Requirements</h6>
-                        <ul class="req-list" id="reqList">
+                        <ul class="requirements-check-list" id="reqList">
                             <li id="req-length"><i class="bi bi-x-circle-fill me-2"></i>At least 8 characters</li>
                             <li id="req-upper"><i class="bi bi-x-circle-fill me-2"></i>One uppercase letter</li>
                             <li id="req-lower"><i class="bi bi-x-circle-fill me-2"></i>One lowercase letter</li>
@@ -245,7 +245,7 @@
     </section>
 
     <%# ─── SECTION: SUBMISSIONS ─── %>
-    <section class="page-section" id="section-submissions">
+    <section class="page-content-section" id="section-submissions">
         <div class="container py-5">
             <div class="text-center mb-5">
                 <h2 class="fw-bold">All Submissions</h2>
@@ -265,9 +265,9 @@
                     <div class="row g-4" id="cardsRow">
                         <% submissions.forEach((sub, index) => { %>
                             <div class="col-md-6 col-lg-4 sub-col" data-index="<%= index %>">
-                                <div class="sub-card p-4 h-100">
+                                <div class="submission-record-card p-4 h-100">
                                     <div class="d-flex align-items-center mb-3">
-                                        <div class="avatar me-3"><%= sub.name.charAt(0).toUpperCase() %></div>
+                                        <div class="user-avatar-circle me-3"><%= sub.name.charAt(0).toUpperCase() %></div>
                                         <div>
                                             <h6 class="mb-0 fw-bold"><%= sub.name %></h6>
                                             <small class="text-muted"><%= sub.email %></small>
@@ -286,7 +286,7 @@
     </section>
 
     <%# Footer %>
-    <footer class="footer py-4 text-center text-white">
+    <footer class="page-footer py-4 text-center text-white">
         <p class="mb-0">© 2024 Cognifyz Technologies · Task 4 — Dynamic DOM + Complex Validation</p>
     </footer>
 
@@ -295,17 +295,17 @@
     <script>
         // ─── CLIENT-SIDE ROUTING ───
         function navigateTo(section) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active-section'));
-            document.querySelectorAll('.route-link').forEach(l => l.classList.remove('active-link'));
+            document.querySelectorAll('.page-content-section').forEach(s => s.classList.remove('active-page-section'));
+            document.querySelectorAll('.navigation-route-link').forEach(l => l.classList.remove('active-navigation-link'));
 
-            document.getElementById('section-' + section).classList.add('active-section');
-            document.querySelector(`[data-section="${section}"]`).classList.add('active-link');
+            document.getElementById('section-' + section).classList.add('active-page-section');
+            document.querySelector(`[data-section="${section}"]`).classList.add('active-navigation-link');
 
             window.location.hash = section;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        document.querySelectorAll('.route-link').forEach(link => {
+        document.querySelectorAll('.navigation-route-link').forEach(link => {
             link.addEventListener('click', e => {
                 e.preventDefault();
                 navigateTo(link.dataset.section);
@@ -416,6 +416,7 @@
         function showErr(id, msg) { document.getElementById(id).textContent = msg; }
         function clearErr(id)     { document.getElementById(id).textContent = ''; }
 
+        // ─── GENERAL FORM VALIDATION ───
         function validateForm() {
             let isValid = true;
 
