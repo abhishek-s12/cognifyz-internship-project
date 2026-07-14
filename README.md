@@ -37,5 +37,5 @@ Internship tasks completed for Cognifyz Technologies.
 4. Create `.env` with your credentials
 5. Run `node server.js`
 
-## Author
+## Intern
 Abhishek Kumar
