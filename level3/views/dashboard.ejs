@@ -13,7 +13,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand fw-bold" href="/">
-                <i class="bi bi-lightning-charge-fill text-warning"></i> Cognifyz
+                <i class="bi bi-lightning-charge-fill text-warning"></i> Cognifyz Internship Level 3
             </a>
             <div class="ms-auto d-flex align-items-center gap-3">
                 <span class="text-white-50">
@@ -115,7 +115,7 @@
             <%# API Explorer Section %>
             <div class="dash-section" id="section-api">
                 <h4 class="fw-bold mb-4">API Explorer</h4>
-                <p class="text-muted mb-4">Live REST API endpoints — click to test them directly.</p>
+                <p class="text-muted mb-4">Live REST API endpoints: Click to test them directly.</p>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <div class="api-card p-4">
@@ -255,7 +255,7 @@
             btn.innerHTML = 'Update Profile <i class="bi bi-check-circle ms-1"></i>';
         });
 
-        // ── Delete account ──
+        //Delete account 
         document.getElementById('deleteBtn').addEventListener('click', async () => {
             if (!confirm('Are you sure? This will permanently delete your account.')) return;
             const res  = await fetch(`/api/users/${USER_ID}`, { method: 'DELETE' });
@@ -263,7 +263,7 @@
             if (data.success) window.location.href = '/';
         });
 
-        // ── API Explorer ──
+        // API Explorer 
         async function testApi(method, url) {
             const pre = document.getElementById('apiResponse');
             pre.textContent = 'Loading...';
@@ -276,7 +276,7 @@
             }
         }
 
-        // ── Logout ──
+        // Logout 
         document.getElementById('logoutBtn').addEventListener('click', async () => {
             await fetch('/auth/logout', { method: 'POST' });
             window.location.href = '/';

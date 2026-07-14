@@ -50,7 +50,7 @@ app.post('/submit', (req, res) => {
         errors.push('Message must be at least 10 characters.');
     }
 
-    // If errors exist → re-render form with errors + preserve input
+    
     if (errors.length > 0) {
         return res.render('index', {
             title: 'Registration Form',
@@ -60,7 +60,7 @@ app.post('/submit', (req, res) => {
         });
     }
 
-    // All good → save and show success
+    
     const newEntry = {
         name: name.trim(),
         email: email.trim(),
